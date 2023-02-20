@@ -1,0 +1,50 @@
+[gd_resource type="Theme" load_steps=12 format=2]
+
+[ext_resource path="res://UIAndMenus/Button Theme/ButtonFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://UIAndMenus/Button Theme/arrow.png" type="Texture" id=2]
+[ext_resource path="res://UIAndMenus/Button Theme/textbox.png" type="Texture" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 32, 32 )
+margin_left = 15.0
+margin_right = 15.0
+margin_top = 15.0
+margin_bottom = 15.0
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 32, 32 )
+margin_left = 15.0
+margin_right = 15.0
+margin_top = 15.0
+margin_bottom = 15.0
+
+[resource]
+Button/colors/font_color = Color( 0, 0, 0, 1 )
+Button/fonts/font = ExtResource( 1 )
+Button/styles/disabled = SubResource( 1 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = SubResource( 3 )
+Button/styles/normal = SubResource( 4 )
+Button/styles/pressed = SubResource( 5 )
+Label/fonts/font = ExtResource( 1 )
+Label/styles/normal = SubResource( 8 )
+LineEdit/colors/font_color = Color( 0, 0, 0, 1 )
+LineEdit/constants/minimum_spaces = 3
+LineEdit/fonts/font = ExtResource( 1 )
+LineEdit/styles/focus = SubResource( 7 )
+LineEdit/styles/normal = SubResource( 6 )
+SpinBox/icons/updown = ExtResource( 2 )

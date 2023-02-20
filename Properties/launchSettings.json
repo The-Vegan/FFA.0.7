@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FFA.0.6": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false
+    }
+  }
+}

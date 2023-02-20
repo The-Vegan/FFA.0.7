@@ -1,0 +1,12 @@
+<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>FFA.Empty.Empty</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="CTF\Shrines\Savana\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SuperSimpleTcp" Version="3.0.7" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://UIAndMenus/EndScreen/EndScreenLabels.tres" type="Theme" id=1]
+[ext_resource path="res://UIAndMenus/EndScreen/FinalScoreBox.cs" type="Script" id=2]
+
+[node name="FinalScoreBox" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="Banner" type="Sprite" parent="."]
+
+[node name="Portait" type="Sprite" parent="Banner"]
+
+[node name="Name" type="Label" parent="Banner"]
+margin_right = 40.0
+margin_bottom = 104.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 1 )
+
+[node name="Score" type="Label" parent="Banner"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 1 )
+
+[node name="PerfectBeats" type="Label" parent="Banner"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 1 )
+
+[node name="MissedBeats" type="Label" parent="Banner"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 1 )
