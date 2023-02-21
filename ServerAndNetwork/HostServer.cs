@@ -44,8 +44,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
         private const byte LAUNCH = 253;
         private const byte SET_CLIENT_OR_ENTITY_ID = 252;
         private const byte SEND_NAME_LIST = 251;
-        //Pre launch
-        private const byte CONNEXION_DENIED = 250;
+        private const byte SET_LEVEL_CONFIG = 250;
         //Post launch
         private const byte GAME_OVER = 249;
         private const byte GAME_SOON_OVER = 248;
@@ -53,7 +52,6 @@ namespace FFA.Empty.Empty.ServerAndNetwork
         private const byte SYNC = 246;
         private const byte ITEM_GIVEN_BY_SERVER = 245;
         private const byte BLUNDERED_BY_SERVER = 244;
-        //Post launch
         //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
         //Packet constants
 

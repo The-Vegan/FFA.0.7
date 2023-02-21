@@ -4,7 +4,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Net;
 
 public class MainMenu : Control
 {
@@ -23,7 +23,15 @@ public class MainMenu : Control
     //Level Instancing Values
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
     private PackedScene levelToLoad;
-    public void SetLevel(PackedScene lvl) { levelToLoad = lvl; }
+    public void SetLevel(byte lvlID) 
+    {
+        switch (lvlID)
+        {
+            default:
+                levelToLoad = GD.Load("res://Levels/Kyomira1.tscn") as PackedScene;
+                break;
+        }
+    }
     public byte gameMode = 0;
     public byte playerCharacter = 0;
     public byte teams = 1;
@@ -82,6 +90,17 @@ public class MainMenu : Control
         else this.GetNode<Label>("WaitForPlayers/Countdown").Visible = false;
         this.GetNode<Label>("WaitForPlayers/Countdown").Text = sec + "   ";
     }
+
+    public void HostGame()
+    {
+        string locIP = Dns.GetHostName();
+        //create the server
+        this.server = new HostServer(locIP, 1404);
+        //create the client to connect to itself
+        this.ConnectToServer(locIP);
+        //Changes the back button to reset networkConfig
+        backFromModeSelect.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));
+    }
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
     //Network
 
@@ -127,7 +146,7 @@ public class MainMenu : Control
             case 0://MainMenu                                                          
                 camera.Position = MAINMENU;
                 break;
-            case 1://Solo
+            case 1://ModeSelect
                 camera.Position = SOLO;
                 break;
             case 2://Character Select

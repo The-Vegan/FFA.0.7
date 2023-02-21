@@ -1,4 +1,4 @@
-[gd_scene load_steps=151 format=2]
+[gd_scene load_steps=152 format=2]
 
 [ext_resource path="res://UIAndMenus/Button Theme/FullButtonAnim.png" type="Texture" id=1]
 [ext_resource path="res://UIAndMenus/DestinationButton/Back.gd" type="Script" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://UIAndMenus/ServerAndClientConfig/Namebox.cs" type="Script" id=23]
 [ext_resource path="res://UIAndMenus/ServerAndClientConfig/ConnectedLabel.tres" type="Theme" id=24]
 [ext_resource path="res://UIAndMenus/ServerAndClientConfig/DisconnectedLabel.tres" type="Theme" id=25]
+[ext_resource path="res://UIAndMenus/Host.cs" type="Script" id=26]
 [ext_resource path="res://UIAndMenus/DestinationButton/Multi.gd" type="Script" id=27]
 
 [sub_resource type="AtlasTexture" id=50]
@@ -890,6 +891,7 @@ margin_right = 256.0
 margin_bottom = 160.0
 theme = ExtResource( 14 )
 text = "Host "
+script = ExtResource( 26 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Multi/Host"]
 z_index = -1
