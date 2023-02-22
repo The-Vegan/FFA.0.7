@@ -19,8 +19,8 @@ namespace FFA.Empty.Empty.ServerAndNetwork
 
         private MainMenu menu;
         private Level map;
-
-        private List<ScafholdEntity> playerList;
+        private ScafholdEntity clientItself = new ScafholdEntity();
+        private List<ScafholdEntity> playerList = new List<ScafholdEntity>();
 
         public void InitParent(MainMenu isItMenu)
         {
@@ -114,6 +114,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
             {
                 case SET_CLIENT_OR_ENTITY_ID:
                     clientID = data[1];
+                    clientItself.scafholdClientID = clientID;
                     GD.Print("Client ID assigned by server to " + clientID);
                     if (data[2] == 0) break;
                     charID = data[2];
@@ -171,6 +172,8 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                             scafholdClientID = idOfClient,
                             name = nametag
                         };
+                        if (idOfClient == clientID) clientItself = se;
+
                         playerList.Add(se);
                     }
                     //TODO IN MENU
@@ -183,6 +186,8 @@ namespace FFA.Empty.Empty.ServerAndNetwork
 
         public void SetName(string name)
         {
+            clientItself.name = name;
+
             byte[] stringAsBytes = UnicodeEncoding.Unicode.GetBytes(name);
 
             byte[] outstream = new byte[3 + stringAsBytes.Length];
@@ -197,6 +202,18 @@ namespace FFA.Empty.Empty.ServerAndNetwork
 
         public void SetChar(byte id)
         {
+            clientItself.scafholdEntityID = id;
+
+            for(byte i = 0; i < playerList.Count; i++)
+            {
+                if (playerList[i].scafholdClientID == clientItself.scafholdClientID)
+                {
+                    playerList[i] = clientItself;
+                    break;
+                }
+
+            }
+
             charID = id;
             byte[] outstream = new byte[3];
 

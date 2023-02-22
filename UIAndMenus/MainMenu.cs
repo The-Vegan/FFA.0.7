@@ -52,17 +52,20 @@ public class MainMenu : Control
         client = new LocalClient(ipEndpoint, 1404);
         if (client.ConnectClient())
         {
-            MoveCameraTo(2);//Goes to CHARSELECT
+            
             backFromIpForm.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));//Makes the "Back" button destroy the client
             isMultiplayer = true;
             GD.Print("Successful Connexion");
-            if (server == null) postCharacterDestination = 6;
+            if (server == null)
+            {
+                MoveCameraTo(2);//Goes to CHARSELECT
+                postCharacterDestination = 6;
+            }
         }
         else
         {
             ipLineEditMessage.Text = "Could not connect to server";
         }
-        SetCharacter(0);
     }
 
     public void SetMultiplayerName(string name)

@@ -4,7 +4,7 @@ using System;
 public class Host : Button
 {
 
-    MainMenu menu;
+    private MainMenu menu;
 
     public override void _Ready()
     {
