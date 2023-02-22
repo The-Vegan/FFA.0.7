@@ -1,4 +1,5 @@
-﻿using SuperSimpleTcp;
+﻿using Godot;
+using SuperSimpleTcp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,13 +86,13 @@ namespace FFA.Empty.Empty.ServerAndNetwork
         {
             if (isLaunched)
             {
-                Console.WriteLine("Client Denied : Server is launched");
+                GD.Print("[HostServer] Client Denied : Server is launched");
                 server.DisconnectClient(e.IpPort);
                 return;
             }
             if (connected == numberOfPlayers)
             {
-                Console.WriteLine("Client Denied : SERVER FULL");
+                GD.Print("[HostServer] Client Denied : SERVER FULL");
                 server.DisconnectClient(e.IpPort);
                 return;
             }
@@ -121,7 +122,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                 }
             }
             connected++;
-            Console.WriteLine("Client Connected");
+            GD.Print("[HostServer] Client Connected");
         }
         private void RemoveClientFromIPList(string ipPort)
         {
@@ -129,18 +130,18 @@ namespace FFA.Empty.Empty.ServerAndNetwork
             {
                 if (ipPort == listOfIPs[i])
                 {
-                    Console.WriteLine("Client Disconnected");
+                    GD.Print("[HostServer] Client Disconnected");
                     listOfIPs[i] = null;
                     ipToEntity.Remove(ipPort);
                     connected--;
                 }
-                else if (i == listOfIPs.Length) Console.WriteLine("Client Not found");
+                else if (i == listOfIPs.Length) GD.Print("[HostServer] Client Not found");
             }
             for (byte i = 0; i < listOfIPs.Length; i++)
             {
                 if (listOfIPs[i] == null) continue;
-                if (ipToEntity[listOfIPs[i]].name == null) { Console.WriteLine((i + 1) + " : UNNAMED"); continue; }
-                Console.WriteLine((i + 1) + " : " + ipToEntity[listOfIPs[i]].name);
+                if (ipToEntity[listOfIPs[i]].name == null) { GD.Print("[HostServer] " + (i + 1) + " : UNNAMED"); continue; }
+                GD.Print((i + 1) + " : " + ipToEntity[listOfIPs[i]].name);
             }
         }
         
@@ -151,7 +152,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
             switch (data[0])
             {
                 case MOVE:
-                    Console.WriteLine("Move");
+                    GD.Print("Move");
                     break;
                 case SET_CHARACTER:
                     ScafholdEntity se = ipToEntity[e.IpPort];
@@ -164,7 +165,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                     UpdateAllPlayers();
                     break;
                 case CHOSE_TEAM:
-                    Console.WriteLine("Team");
+                    GD.Print("Team");
                     break;
             }
         }
@@ -181,7 +182,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
 
             for (byte i = 0; i < 16; i++)
             {
-                Console.Write((i + 1) + "\t: ");
+                GD.Print((i + 1) + "\t: ");
                 if (listOfIPs[i] != null)
                 {
                     if (ipToEntity[listOfIPs[i]].name == null) { ScafholdEntity se = ipToEntity[listOfIPs[i]]; se.name = "UNNAMED"; ipToEntity[listOfIPs[i]] = se; } 
@@ -297,15 +298,15 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                 if (ip == null) continue;
                 server.Send(ip, new byte[] { ABOUT_TO_LAUNCH });
             }
-            Console.WriteLine();
-            Console.Write("Launches in ");
+            GD.Print();
+            GD.Print("Launches in ");
             for (byte i = 3; i != 0; i--)
             {
                 menu.Countdown(i);
 
                 for(byte j = 0; j < 30; j++)//Waits one frame 30 times
                 {
-                    Thread.Sleep(33);
+                    System.Threading.Thread.Sleep(33);
                     if (abortLaunch) break;//If launch is stopped, stops
                 }
                 if (abortLaunch)  break; 

@@ -1,4 +1,5 @@
-﻿using SuperSimpleTcp;
+﻿using Godot;
+using SuperSimpleTcp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,12 +92,12 @@ namespace FFA.Empty.Empty.ServerAndNetwork
 
         private void ClientConnected(object sender, ConnectionEventArgs e)
         {
-            Console.WriteLine("Connected to server");
+            GD.Print("[LocalClient] Connected to server");
         }
 
         private void ClientDisonnected(object sender, ConnectionEventArgs e)
         {
-            Console.WriteLine("Disconnected from server");
+            GD.Print("[LocalClient] Disconnected from server");
         }
 
         public void SendData(byte[] data)
@@ -113,19 +114,19 @@ namespace FFA.Empty.Empty.ServerAndNetwork
             {
                 case SET_CLIENT_OR_ENTITY_ID:
                     clientID = data[1];
-                    Console.WriteLine("Client ID assigned by server to " + clientID);
+                    GD.Print("Client ID assigned by server to " + clientID);
                     if (data[2] == 0) break;
                     charID = data[2];
-                    Console.WriteLine("Character assigned by server to " + charID);
+                    GD.Print("Character assigned by server to " + charID);
                     break;
                 case ABOUT_TO_LAUNCH:
-                    Console.WriteLine("Will Start soon");
+                    GD.Print("Will Start soon");
                     break;
                 case ABORT_LAUNCH:
-                    Console.WriteLine("nvm");
+                    GD.Print("nvm");
                     break;
                 case LAUNCH:
-                    Console.WriteLine("Start signal recieved");
+                    GD.Print("Start signal recieved");
                     break;
                 case SET_MOVES:
                     for (int i = 2; i < (2 + (data[1] * 7)); i += 7)
@@ -136,7 +137,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
 
                         float timing = BitConverter.ToSingle(data, i + 3);
 
-                        Console.WriteLine("Entity " + id + " set pckt to " + packet + " with timing of " + timing);
+                        GD.Print("Entity " + id + " set pckt to " + packet + " with timing of " + timing);
                     }
                     break;
                 case SYNC:
@@ -152,7 +153,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                         byte item = data[i + 5];
                         byte blunder = data[i + 6];
 
-                        Console.WriteLine("Entity " + id + " :\t" + xCoord + "x\t" + yCoord + "y :\t" + hp + " HP. item = " + item + ", blunder = " + blunder);
+                        GD.Print("Entity " + id + " :\t" + xCoord + "x\t" + yCoord + "y :\t" + hp + " HP. item = " + item + ", blunder = " + blunder);
                     }
                     break;
                 case SEND_NAME_LIST:
