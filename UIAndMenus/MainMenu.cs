@@ -53,11 +53,17 @@ public class MainMenu : Control
         if (client.ConnectClient())
         {
             
-            backFromIpForm.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));//Makes the "Back" button destroy the client
+            
+
             isMultiplayer = true;
             GD.Print("Successful Connexion");
             if (server == null)
             {
+                backFromIpForm.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));//Makes the "Back" button destroy the client
+
+                ((ResetNetworkConfigButton)backFromIpForm).InitMainMenu(this);
+                GD.Print("[MainMenu] Script changed to fit CLIENT");
+
                 MoveCameraTo(2);//Goes to CHARSELECT
                 postCharacterDestination = 6;
             }
@@ -104,6 +110,10 @@ public class MainMenu : Control
         this.ConnectToServer(locIP);
         //Changes the back button to reset networkConfig
         backFromModeSelect.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));
+        GD.Print(backFromModeSelect.GetScript());
+
+        ((ResetNetworkConfigButton)backFromModeSelect).InitMainMenu(this);
+        GD.Print("[MainMenu] Script changed to fit SERVER");
 
         postCharacterDestination = 3;
     }
