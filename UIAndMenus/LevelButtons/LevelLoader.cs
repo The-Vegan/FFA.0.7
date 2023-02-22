@@ -17,6 +17,13 @@ public class LevelLoader : Button
 
     public override void _Pressed()
     {
+        if (mainMenu.isMultiplayer)
+        {
+            mainMenu.MoveCameraTo(6);
+        }
+
+
+
         loadedLevel = lvlToLoad.Instance() as Level;
 
         if (loadedLevel == null)

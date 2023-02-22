@@ -6,5 +6,4 @@ func _ready():
 func _pressed():
 	self.destination = mainMenu.postCharacterDestination
 	
-	mainMenu.CharacterChosen()
 	._pressed()

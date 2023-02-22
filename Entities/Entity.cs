@@ -309,7 +309,7 @@ public class Entity : AnimatedSprite
         {
             damagedBy[i].HitSomeone((short) (50/(damagedBy.Count - 1)));//Distributes 50 points between all killers
         }
-
+        
         prevPos = Vector2.NegOne;//Prevents further damage
         pos = Vector2.NegOne;
         this.Visible = false;

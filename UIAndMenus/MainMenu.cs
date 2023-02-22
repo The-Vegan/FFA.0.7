@@ -14,6 +14,7 @@ public class MainMenu : Control
     protected VBoxContainer playerListBox;
 
     protected Label ipLineEditMessage;
+    public byte postCharacterDestination = 3;
 
     public LineEdit nameBox;
     public Sprite resetNetworkConfigForm;
@@ -23,14 +24,11 @@ public class MainMenu : Control
     //Level Instancing Values
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
     private PackedScene levelToLoad;
-    public void SetLevel(byte lvlID) 
+    public void SetLevel(PackedScene lvl) 
     {
-        switch (lvlID)
-        {
-            default:
-                levelToLoad = GD.Load("res://Levels/Kyomira1.tscn") as PackedScene;
-                break;
-        }
+        if(lvl == null) return;
+        levelToLoad =lvl;
+ 
     }
     public byte gameMode = 0;
     public byte playerCharacter = 0;
@@ -57,11 +55,14 @@ public class MainMenu : Control
             MoveCameraTo(2);//Goes to CHARSELECT
             backFromIpForm.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));//Makes the "Back" button destroy the client
             isMultiplayer = true;
+            GD.Print("Successful Connexion");
+            if (server == null) postCharacterDestination = 6;
         }
         else
         {
             ipLineEditMessage.Text = "Could not connect to server";
         }
+        SetCharacter(0);
     }
 
     public void SetMultiplayerName(string name)
@@ -100,6 +101,8 @@ public class MainMenu : Control
         this.ConnectToServer(locIP);
         //Changes the back button to reset networkConfig
         backFromModeSelect.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));
+
+        postCharacterDestination = 3;
     }
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
     //Network
@@ -191,6 +194,7 @@ public class MainMenu : Control
     public void ShowNetworkForm()
     {
         this.resetNetworkConfigForm.Visible = true;
+        GetTree().CallGroup("MenuButton", "_Set", "enable", false);
     }
 
     public void ResetNetwork()
@@ -209,6 +213,7 @@ public class MainMenu : Control
         backFromIpForm.SetScript(script);
         backFromModeSelect.SetScript(script);
         isMultiplayer = false;
+        postCharacterDestination = 3;
         GC.Collect();
     }
 
