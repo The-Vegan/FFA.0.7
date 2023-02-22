@@ -126,7 +126,7 @@ public abstract class Level : TileMap
         }
     }
 
-    public void InitPlayerAndMode(byte chosenCharacter, byte gameMode, byte numberOfPlayers, byte numberOfTeams, byte chosenTeam)
+    public bool InitPlayerAndMode(byte chosenCharacter, byte gameMode, byte numberOfPlayers, byte numberOfTeams, byte chosenTeam)
     {
         NumberOfEntities = numberOfPlayers;
 
@@ -178,7 +178,7 @@ public abstract class Level : TileMap
         }
 
         GD.Print("[Level] LoadCompleted in level");
-        
+        return true;
 
     }
     //OVERRIDE

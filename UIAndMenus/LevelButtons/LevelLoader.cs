@@ -32,14 +32,19 @@ public class LevelLoader : Button
             return;
         }
         mainMenu.SetLevel(lvlToLoad);
-        
-        if(!mainMenu.isMultiplayer)
-        loadedLevel.InitPlayerAndMode(
-            mainMenu.playerCharacter,
-            mainMenu.gameMode,
-            mainMenu.numberOfEntities,
-            mainMenu.teams,
-            mainMenu.chosenTeam);
+
+        if (!mainMenu.isMultiplayer)
+            if (loadedLevel.InitPlayerAndMode(
+                mainMenu.playerCharacter,
+                mainMenu.gameMode,
+                mainMenu.numberOfEntities,
+                mainMenu.teams,
+                mainMenu.chosenTeam))
+            {
+                GetTree().Root.AddChild(loadedLevel);
+
+                mainMenu.QueueFree();
+            }
         
     }
 
