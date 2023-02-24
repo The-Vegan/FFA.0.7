@@ -19,6 +19,8 @@ public class ResetNetworkConfigButton : Button
         GetTree().CallGroup("MenuButton", "set", "disabled", true);
 
         GD.Print("[ResetNetworkConfigButton] buttons set to Disable = true");
+
+        GD.Print(yes + " :: " + no);
     }
     public void Accepted()
     {

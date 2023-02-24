@@ -592,7 +592,6 @@ text = "Your name"
 align = 1
 
 [node name="ResetNetworkConfigForm" type="Sprite" parent="Camera2D"]
-visible = false
 position = Vector2( 479, 272 )
 texture = ExtResource( 31 )
 
@@ -1078,6 +1077,8 @@ animation = "Normal"
 centered = false
 
 [connection signal="focus_exited" from="Camera2D/Namebox" to="Camera2D/Namebox" method="FocusExit"]
+[connection signal="focus_entered" from="Camera2D/ResetNetworkConfigForm/Yes" to="Camera2D/ResetNetworkConfigForm/Yes" method="_on_Yes_focus_entered"]
+[connection signal="mouse_entered" from="Camera2D/ResetNetworkConfigForm/Yes" to="Camera2D/ResetNetworkConfigForm/Yes" method="_on_Yes_mouse_entered"]
 [connection signal="pressed" from="Camera2D/ResetNetworkConfigForm/Yes" to="Camera2D/ResetNetworkConfigForm/Yes" method="_on_pressed"]
 [connection signal="pressed" from="LevelSelect/EntityCounter/Up" to="LevelSelect/EntityCounter" method="_on_Up_pressed"]
 [connection signal="pressed" from="LevelSelect/EntityCounter/Down" to="LevelSelect/EntityCounter" method="_on_Down_pressed"]
