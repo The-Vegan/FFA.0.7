@@ -1,4 +1,4 @@
-[gd_scene load_steps=156 format=2]
+[gd_scene load_steps=155 format=2]
 
 [ext_resource path="res://UIAndMenus/Button Theme/FullButtonAnim.png" type="Texture" id=1]
 [ext_resource path="res://UIAndMenus/DestinationButton/Back.gd" type="Script" id=2]
@@ -27,7 +27,6 @@
 [ext_resource path="res://UIAndMenus/ServerAndClientConfig/DisconnectedLabel.tres" type="Theme" id=25]
 [ext_resource path="res://UIAndMenus/ServerAndClientConfig/Host.cs" type="Script" id=26]
 [ext_resource path="res://UIAndMenus/DestinationButton/Multi.gd" type="Script" id=27]
-[ext_resource path="res://UIAndMenus/Yes.gd" type="Script" id=28]
 [ext_resource path="res://UIAndMenus/ServerAndClientConfig/Join.cs" type="Script" id=29]
 [ext_resource path="res://UIAndMenus/ServerAndClientConfig/LaunchMultiplayerButton.cs" type="Script" id=30]
 [ext_resource path="res://UIAndMenus/Button Theme/Sans titre.png" type="Texture" id=31]
@@ -591,19 +590,22 @@ margin_bottom = 38.0
 text = "Your name"
 align = 1
 
-[node name="ResetNetworkConfigForm" type="Sprite" parent="Camera2D"]
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+layer = 10
+
+[node name="ResetNetworkConfigForm" type="Sprite" parent="Camera2D/CanvasLayer"]
+visible = false
 position = Vector2( 479, 272 )
 texture = ExtResource( 31 )
 
-[node name="Yes" type="Button" parent="Camera2D/ResetNetworkConfigForm"]
+[node name="Yes" type="Button" parent="Camera2D/CanvasLayer/ResetNetworkConfigForm"]
 margin_left = -182.0
 margin_top = 28.0
 margin_right = -60.0
 margin_bottom = 87.0
 text = "yes"
-script = ExtResource( 28 )
 
-[node name="No" type="Button" parent="Camera2D/ResetNetworkConfigForm"]
+[node name="No" type="Button" parent="Camera2D/CanvasLayer/ResetNetworkConfigForm"]
 margin_left = 40.0
 margin_top = 39.0
 margin_right = 185.0
@@ -1077,8 +1079,5 @@ animation = "Normal"
 centered = false
 
 [connection signal="focus_exited" from="Camera2D/Namebox" to="Camera2D/Namebox" method="FocusExit"]
-[connection signal="focus_entered" from="Camera2D/ResetNetworkConfigForm/Yes" to="Camera2D/ResetNetworkConfigForm/Yes" method="_on_Yes_focus_entered"]
-[connection signal="mouse_entered" from="Camera2D/ResetNetworkConfigForm/Yes" to="Camera2D/ResetNetworkConfigForm/Yes" method="_on_Yes_mouse_entered"]
-[connection signal="pressed" from="Camera2D/ResetNetworkConfigForm/Yes" to="Camera2D/ResetNetworkConfigForm/Yes" method="_on_pressed"]
 [connection signal="pressed" from="LevelSelect/EntityCounter/Up" to="LevelSelect/EntityCounter" method="_on_Up_pressed"]
 [connection signal="pressed" from="LevelSelect/EntityCounter/Down" to="LevelSelect/EntityCounter" method="_on_Down_pressed"]

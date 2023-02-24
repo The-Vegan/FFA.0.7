@@ -45,8 +45,6 @@ public class MainMenu : Control
     private LocalClient client = null;
     private HostServer server = null;
 
-    private Button backFromModeSelect;
-    private Button backFromIpForm;
     public void ConnectToServer(string ipEndpoint)
     {
         client = new LocalClient(ipEndpoint, 1404);
@@ -59,8 +57,9 @@ public class MainMenu : Control
             GD.Print("Successful Connexion");
             if (server == null)
             {
+                Button backFromIpForm = GetNode("ConnectToServer/Back") as Button;
                 backFromIpForm.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));//Makes the "Back" button destroy the client
-
+                
                 GD.Print("[MainMenu] Script changed to fit CLIENT");
 
                 MoveCameraTo(2);//Goes to CHARSELECT
@@ -108,7 +107,9 @@ public class MainMenu : Control
         //create the client to connect to itself
         this.ConnectToServer(locIP);
         //Changes the back button to reset networkConfig
+        Button backFromModeSelect = GetNode("SoloMenu/Back") as Button;
         backFromModeSelect.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));
+        
         await ToSignal(GetTree(), "idle_frame");
         GD.Print("[MainMenu] one frame since script changed");
         //if(backFromModeSelect == null) GD.Print(null);
@@ -141,9 +142,8 @@ public class MainMenu : Control
         playerListBox = this.GetNode("WaitForPlayers/VBoxContainer") as VBoxContainer;
         ipLineEditMessage = this.GetNode("ConnectToServer/IpTextBox/Label") as Label;
 
-        backFromModeSelect = GetNode("SoloMenu/Back") as Button;
-        backFromIpForm = GetNode("ConnectToServer/Back") as Button;
-        resetNetworkConfigForm = GetNode("Camera2D/ResetNetworkConfigForm") as Sprite;
+        
+        resetNetworkConfigForm = GetNode("Camera2D/CanvasLayer/ResetNetworkConfigForm") as Sprite;
         GD.Print("[MainMenu] networkForm is " + resetNetworkConfigForm);
     }
 
@@ -225,9 +225,15 @@ public class MainMenu : Control
             server.ShutDown();
             server = null;
         }
+
         Reference script = GD.Load<Reference>("res://UIAndMenus/DestinationButton/Back.gd");
+
+        Button backFromIpForm = GetNode("ConnectToServer/Back") as Button;
         backFromIpForm.SetScript(script);
+        Button backFromModeSelect = GetNode("SoloMenu/Back") as Button;
         backFromModeSelect.SetScript(script);
+
+        resetNetworkConfigForm.Visible = false;
         isMultiplayer = false;
         postCharacterDestination = 3;
         GC.Collect();
