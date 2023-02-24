@@ -61,7 +61,6 @@ public class MainMenu : Control
             {
                 backFromIpForm.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));//Makes the "Back" button destroy the client
 
-                ((ResetNetworkConfigButton)backFromIpForm).InitMainMenu(this);
                 GD.Print("[MainMenu] Script changed to fit CLIENT");
 
                 MoveCameraTo(2);//Goes to CHARSELECT
@@ -101,7 +100,7 @@ public class MainMenu : Control
         this.GetNode<Label>("WaitForPlayers/Countdown").Text = sec + "   ";
     }
 
-    public void HostGame()
+    public async void HostGame()
     {
         string locIP = Dns.GetHostName();
         //create the server
@@ -110,10 +109,13 @@ public class MainMenu : Control
         this.ConnectToServer(locIP);
         //Changes the back button to reset networkConfig
         backFromModeSelect.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));
-        GD.Print(backFromModeSelect.GetScript());
+        await ToSignal(GetTree(), "idle_frame");
+        GD.Print("[MainMenu] one frame since script changed");
+        //if(backFromModeSelect == null) GD.Print(null);
+        //else GD.Print(backFromModeSelect);
 
-        ((ResetNetworkConfigButton)backFromModeSelect).InitMainMenu(this);
-        GD.Print("[MainMenu] Script changed to fit SERVER");
+        //((ResetNetworkConfigButton)backFromModeSelect).InitMainMenu(this);
+        //GD.Print("[MainMenu] Script changed to fit SERVER");
 
         postCharacterDestination = 3;
     }
@@ -142,6 +144,7 @@ public class MainMenu : Control
         backFromModeSelect = GetNode("SoloMenu/Back") as Button;
         backFromIpForm = GetNode("ConnectToServer/Back") as Button;
         resetNetworkConfigForm = GetNode("Camera2D/ResetNetworkConfigForm") as Sprite;
+        GD.Print("[MainMenu] networkForm is " + resetNetworkConfigForm);
     }
 
     public void MoveCameraTo(sbyte destination)

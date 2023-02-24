@@ -4,15 +4,20 @@ using System;
 public class ResetNetworkConfigButton : Button
 {
     private MainMenu mm;
-    public void InitMainMenu(MainMenu menu) {mm = menu;}
+    
 
     public override void _Pressed()
     {
+        mm = this.GetParent().GetParent() as MainMenu;
         mm.resetNetworkConfigForm.Visible = true;
 
-        mm.resetNetworkConfigForm.GetChild(0).Connect("pressed", this, "Accepted");
-        mm.resetNetworkConfigForm.GetChild(1).Connect("pressed", this, "Refused");
+        Button yes = mm.resetNetworkConfigForm.GetChild(0) as Button;
+        Button no = mm.resetNetworkConfigForm.GetChild(1) as Button;
+
+        yes.Connect("pressed", this, "Accepted");
+        no.Connect("pressed", this, "Refused");
         GetTree().CallGroup("MenuButton", "set", "disabled", true);
+
         GD.Print("[ResetNetworkConfigButton] buttons set to Disable = true");
     }
     public void Accepted()
