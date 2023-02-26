@@ -33,11 +33,9 @@ public class ResetNetworkConfigButton : Button
             GD.Print("Menu is null");
             return;
         }
-        //avant c'était ici
         mm.MoveCameraTo(-1);
         GetTree().CallGroup("MenuButton", "set", "disabled", false);
         GD.Print("[ResetNetworkConfigButton] buttons set to Disable = false");
-        //mtn c'est là
         mm.ResetNetwork();
     }
 

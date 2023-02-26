@@ -16,7 +16,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
 
         private byte clientID = 0;
         private byte charID = 0;
-
+        
         private MainMenu menu;
         private Level map;
         private ScafholdEntity clientItself = new ScafholdEntity();
@@ -98,6 +98,8 @@ namespace FFA.Empty.Empty.ServerAndNetwork
         private void ClientDisonnected(object sender, ConnectionEventArgs e)
         {
             GD.Print("[LocalClient] Disconnected from server");
+            playerList.Clear();
+            if (menu != null) menu.MoveCameraTo(-2);
         }
 
         public void SendData(byte[] data)
@@ -115,19 +117,19 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                 case SET_CLIENT_OR_ENTITY_ID:
                     clientID = data[1];
                     clientItself.scafholdClientID = clientID;
-                    GD.Print("Client ID assigned by server to " + clientID);
+                    GD.Print("[LocalClient] Client ID assigned by server to " + clientID);
                     if (data[2] == 0) break;
                     charID = data[2];
-                    GD.Print("Character assigned by server to " + charID);
+                    GD.Print("[LocalClient] Character assigned by server to " + charID);
                     break;
                 case ABOUT_TO_LAUNCH:
-                    GD.Print("Will Start soon");
+                    GD.Print("[LocalClient] Will Start soon");
                     break;
                 case ABORT_LAUNCH:
-                    GD.Print("nvm");
+                    GD.Print("[LocalClient] nvm");
                     break;
                 case LAUNCH:
-                    GD.Print("Start signal recieved");
+                    GD.Print("[LocalClient] Start signal recieved");
                     break;
                 case SET_MOVES:
                     for (int i = 2; i < (2 + (data[1] * 7)); i += 7)
@@ -158,26 +160,25 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                     }
                     break;
                 case SEND_NAME_LIST:
+
+
+                    playerList.Clear();
                     ushort offset = 1;
-                    playerList = new List<ScafholdEntity>();
-                    while((data[offset] != 0) && (offset < (data.Length)))
+                    while(data[offset] != 0)
                     {
-                        byte idOfClient = data[offset]; offset++;
-                        byte stringLength = data[offset]; offset++;
-
-                        string nametag = UnicodeEncoding.Unicode.GetString(data, offset, (stringLength * 2));
-                        offset += (ushort)(stringLength * 2);
-                        ScafholdEntity se = new ScafholdEntity()
-                        {
-                            scafholdClientID = idOfClient,
-                            name = nametag
-                        };
-                        if (idOfClient == clientID) clientItself = se;
-
+                        ScafholdEntity se = new ScafholdEntity() { };
+                        se.scafholdClientID = data[offset++];
+                        se.scafholdEntityID = data[offset++];
+                        byte nameLength = data[offset++];
+                        se.name = Encoding.Unicode.GetString(data, 4, nameLength);
+                        offset += nameLength;
                         playerList.Add(se);
                     }
-                    //TODO IN MENU
-                    //menu.DisplayPlayerList(playerList);
+                    for(byte i = 0; i < playerList.Count(); i++)
+                    {
+                        GD.Print(playerList[i].name);
+                    }
+                    
                     break;
             }
 

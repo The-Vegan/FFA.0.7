@@ -36,8 +36,7 @@ public class Namebox : LineEdit
     private MainMenu mm;
     public override void _Ready()
     {
-        mm = GetParent().GetParent() as MainMenu;
-        mm.nameBox = this;
+        mm = GetParent().GetParent().GetParent() as MainMenu;
         this.Text = npcNameTags[rd.Next(npcNameTags.Length)];
     }
 

@@ -141,7 +141,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
             {
                 if (listOfIPs[i] == null) continue;
                 if (ipToEntity[listOfIPs[i]].name == null) { GD.Print("[HostServer] " + (i + 1) + " : UNNAMED"); continue; }
-                GD.Print((i + 1) + " : " + ipToEntity[listOfIPs[i]].name);
+                GD.Print("[HostServer] " + (i + 1) + "\t: " + ipToEntity[listOfIPs[i]].name);
             }
         }
         
@@ -179,21 +179,18 @@ namespace FFA.Empty.Empty.ServerAndNetwork
         private void UpdateAllPlayers()
         {
             List<byte> stream = new List<byte>() { SEND_NAME_LIST };
-
-            for (byte i = 0; i < 16; i++)
+            for(byte i = 0; i < listOfIPs.Length; i++)
             {
-                GD.Print((i + 1) + "\t: ");
-                if (listOfIPs[i] != null)
-                {
-                    if (ipToEntity[listOfIPs[i]].name == null) { ScafholdEntity se = ipToEntity[listOfIPs[i]]; se.name = "UNNAMED"; ipToEntity[listOfIPs[i]] = se; } 
-                    
-                    byte[] nameAsBytes = UnicodeEncoding.Unicode.GetBytes(ipToEntity[listOfIPs[i]].name);
-                    stream.Add(i);
-                    stream.Add((byte)nameAsBytes.Length);
-
-                    for (byte j = 0; j < nameAsBytes.Length; j++) stream.Add(nameAsBytes[j]);
-                }
+                if (listOfIPs[i] == null) continue;
+                ScafholdEntity se = ipToEntity[listOfIPs[i]];
+                stream.Add(se.scafholdClientID);
+                stream.Add(se.scafholdEntityID);
+                if (se.name == null) se.name = "UNNAMED";
+                byte[] nameAsByte = Encoding.Unicode.GetBytes(se.name);
+                stream.Add((byte)nameAsByte.Length);
+                for (byte j = 0; j < nameAsByte.Length; j++) stream.Add(nameAsByte[j]);
             }
+
             byte[] outStream = stream.ToArray();
             foreach (string ip in listOfIPs)
             {
@@ -203,20 +200,6 @@ namespace FFA.Empty.Empty.ServerAndNetwork
         }
         //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
         //Automated work
-
-        //Menu State
-        //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
-        public void MenuInput(string input)
-        {
-            switch (input)
-            {
-                case "S": case "s": this.ShutDown(); break;
-                case "P": case "p": this.UpdateAllPlayers(); break;
-                case "L": case "l": this.SendStart(); break;
-            }
-        }
-        //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
-        //Menu State
         
         //Send Data to clients
         //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\

@@ -16,7 +16,7 @@ public class MainMenu : Control
     protected Label ipLineEditMessage;
     public byte postCharacterDestination = 3;
 
-    public LineEdit nameBox;
+    private LineEdit nameBox;
     public Sprite resetNetworkConfigForm;
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
     //Nodes
@@ -42,6 +42,7 @@ public class MainMenu : Control
 
     //Network
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
+    
     private LocalClient client = null;
     private HostServer server = null;
 
@@ -50,11 +51,10 @@ public class MainMenu : Control
         client = new LocalClient(ipEndpoint, 1404);
         if (client.ConnectClient())
         {
-            
-            
-
+            client.InitParent(this);
             isMultiplayer = true;
-            GD.Print("Successful Connexion");
+            GD.Print("[MainMenu] Successful Connexion");
+            client.SetName(this.nameBox.Text);
             if (server == null)
             {
                 Button backFromIpForm = GetNode("ConnectToServer/Back") as Button;
@@ -78,15 +78,15 @@ public class MainMenu : Control
     }
     public void DisplayPlayerList(List<ScafholdEntity> playerList)
     {
-        Theme connected = GD.Load<Theme>("res://UIAndMenus/ServerAndClientConfig/ConnectedLabel.tres");
-        Theme disconnected = GD.Load<Theme>("res://UIAndMenus/ServerAndClientConfig/DisconnectedLabel.tres");
-        //Make every labels theme "disconnected"
-        for (byte i = 0; i < playerListBox.GetChildCount(); i++) playerListBox.GetChild<Label>(i).SetTheme(disconnected);
+        GD.Print("[MainMenu]");
+        GD.Print("[MainMenu] playerListCount : " + playerList.Count);
         //Finds the label corresponding to players and sets thier theme to "connected"
         for (byte i = 0; i < playerList.Count; i++)
         {
-            playerListBox.GetChild<Label>(playerList[i].scafholdClientID).Text = ((i+1) + " : " + playerList[i].name);
-            playerListBox.GetChild<Label>(playerList[i].scafholdClientID).SetTheme(connected);
+            CheckButton playerLabel = playerListBox.GetChild<CheckButton>(playerList[i].scafholdClientID - 1);
+            playerLabel.Pressed = true;
+            playerLabel.Text = playerList[i].name;
+            GD.Print("[MainMenu] changed button " + playerList[i].scafholdClientID);
         }
     }
 
@@ -99,7 +99,7 @@ public class MainMenu : Control
         this.GetNode<Label>("WaitForPlayers/Countdown").Text = sec + "   ";
     }
 
-    public async void HostGame()
+    public void HostGame()
     {
         string locIP = Dns.GetHostName();
         //create the server
@@ -109,14 +109,9 @@ public class MainMenu : Control
         //Changes the back button to reset networkConfig
         Button backFromModeSelect = GetNode("SoloMenu/Back") as Button;
         backFromModeSelect.SetScript(GD.Load<Reference>("res://UIAndMenus/ServerAndClientConfig/ResetNetworkConfigButton.cs"));
-        
-        await ToSignal(GetTree(), "idle_frame");
-        GD.Print("[MainMenu] one frame since script changed");
-        //if(backFromModeSelect == null) GD.Print(null);
-        //else GD.Print(backFromModeSelect);
 
-        //((ResetNetworkConfigButton)backFromModeSelect).InitMainMenu(this);
-        //GD.Print("[MainMenu] Script changed to fit SERVER");
+
+        GD.Print("[MainMenu] Script changed to fit SERVER");
 
         postCharacterDestination = 3;
     }
@@ -141,7 +136,7 @@ public class MainMenu : Control
         
         playerListBox = this.GetNode("WaitForPlayers/VBoxContainer") as VBoxContainer;
         ipLineEditMessage = this.GetNode("ConnectToServer/IpTextBox/Label") as Label;
-
+        nameBox = GetNode("Camera2D/CanvasLayer/Namebox") as LineEdit;
         
         resetNetworkConfigForm = GetNode("Camera2D/CanvasLayer/ResetNetworkConfigForm") as Sprite;
         GD.Print("[MainMenu] networkForm is " + resetNetworkConfigForm);
@@ -170,7 +165,7 @@ public class MainMenu : Control
                 break;
             case 2://Character Select
                 camera.Position = CHARSELECT;
-                nameBox.Visible = true;
+                if(isMultiplayer) nameBox.Visible = true;
                 break;
             case 3://Level Select
                 camera.Position = LEVELSELECT;

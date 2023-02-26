@@ -146,6 +146,10 @@ debug2={
 
 project/assembly_name="FFA.0.7"
 
+[network]
+
+limits/tcp/connect_timeout_seconds=5
+
 [physics]
 
 common/enable_pause_aware_picking=true
