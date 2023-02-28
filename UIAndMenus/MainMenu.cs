@@ -39,10 +39,21 @@ public class MainMenu : Control
     public bool isMultiplayer = false;
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
     //Level Instancing Values
+    //Debug
+    //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
+    [Export]
+    public byte[] lastDataIn;
+    [Export]
+    public byte[] lastDataOut;
+
+    //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
+    //Debug
+
+
 
     //Network
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
-    
+
     private LocalClient client = null;
     private HostServer server = null;
 

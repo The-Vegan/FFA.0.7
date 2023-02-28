@@ -111,7 +111,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
         private void ReceiveData(object sender, DataReceivedEventArgs e)
         {
             byte[] data = e.Data.Array;
-
+            menu.lastDataIn = data;
             switch (data[0])
             {
                 case SET_CLIENT_OR_ENTITY_ID:
