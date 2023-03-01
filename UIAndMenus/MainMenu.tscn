@@ -611,6 +611,7 @@ margin_bottom = 96.0
 text = "nope"
 
 [node name="Namebox" type="LineEdit" parent="Camera2D/CanvasLayer"]
+visible = false
 margin_left = 320.0
 margin_right = 512.0
 margin_bottom = 24.0
