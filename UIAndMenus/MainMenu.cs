@@ -55,12 +55,13 @@ public class MainMenu : Control
 
     public void ConnectToServer(string ipEndpoint)
     {
-        client = new LocalClient(ipEndpoint, 1404);
+        GD.Print("[MainMenu] Creating  ,:Client");
+        client = new LocalClient(ipEndpoint, 414);
         if (client.ConnectClient())
         {
             client.InitParent(this);
             isMultiplayer = true;
-            GD.Print("[MainMenu] Successful Connexion");
+            GD.Print("[MainMenu] Successful Connexion , multiplayer is :" + isMultiplayer);
             client.SetName(this.nameBox.Text);
             if (server == null)
             {
@@ -107,9 +108,11 @@ public class MainMenu : Control
 
     public void HostGame()
     {
+        GD.Print("[MainMenu] HostGame called");
         string locIP = Dns.GetHostName();
         //create the server
-        this.server = new HostServer(locIP, 1404);
+        this.server = new HostServer(locIP, 414);
+        GD.Print("[MainMenu] Server created on IP : " + locIP + ":414");
         //create the client to connect to itself
         this.ConnectToServer(locIP);
         //Changes the back button to reset networkConfig
@@ -170,7 +173,11 @@ public class MainMenu : Control
                 break;
             case 2://Character Select
                 camera.Position = CHARSELECT;
-                if(isMultiplayer) nameBox.Visible = true;
+                if (isMultiplayer)
+                {
+                    nameBox.Visible = true;
+                }
+                else GD.Print("[MainMenu] Keeping namebox invisible");
                 break;
             case 3://Level Select
                 camera.Position = LEVELSELECT;
@@ -237,6 +244,7 @@ public class MainMenu : Control
 
         resetNetworkConfigForm.Visible = false;
         isMultiplayer = false;
+        GD.Print("[MainMenu] set multiplayer to :" + false);
         postCharacterDestination = 3;
         GC.Collect();
     }

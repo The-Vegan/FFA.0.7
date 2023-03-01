@@ -182,8 +182,6 @@ namespace FFA.Empty.Empty.ServerAndNetwork
             List<byte> stream = new List<byte>() { SEND_NAME_LIST };
             for(byte i = 0; i < listOfIPs.Length; i++)
             {
-
-                if (listOfIPs[i] == null) {GD.Print("[HostServer] null ip : " + (i +1)); continue; } else GD.Print("[HostServer] connected ip : " + listOfIPs[i]);
                 ScafholdEntity se = ipToEntity[listOfIPs[i]];
                 stream.Add(se.scafholdClientID);
                 stream.Add(se.scafholdEntityID);

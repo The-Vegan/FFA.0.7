@@ -13,6 +13,8 @@ public class Host : Button
 
     public override void _Pressed()
     {
+        if (menu == null) GD.Print("[Host] FUCKED THE REFERENCE AGAIN");
+        GD.Print("[Host] Creates HostServer");
         menu.HostGame();
         GD.Print("[Host] Created HostServer");
         menu.MoveCameraTo(1);
