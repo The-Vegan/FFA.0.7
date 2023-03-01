@@ -611,7 +611,6 @@ margin_bottom = 96.0
 text = "nope"
 
 [node name="Namebox" type="LineEdit" parent="Camera2D/CanvasLayer"]
-visible = false
 margin_left = 320.0
 margin_right = 512.0
 margin_bottom = 24.0
@@ -626,6 +625,13 @@ margin_right = 192.0
 margin_bottom = 38.0
 text = "Your name"
 align = 1
+
+[node name="Button" type="Button" parent="Camera2D/CanvasLayer/Namebox"]
+margin_left = 194.5
+margin_top = 1.5
+margin_right = 206.5
+margin_bottom = 21.5
+text = "ok"
 
 [node name="StartMenu" type="Container" parent="."]
 margin_right = 1024.0
