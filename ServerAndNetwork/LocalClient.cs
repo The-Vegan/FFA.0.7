@@ -167,16 +167,18 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                     while(data[offset] != 0)
                     {
                         ScafholdEntity se = new ScafholdEntity() { };
-                        se.scafholdClientID = data[offset++];
-                        se.scafholdEntityID = data[offset++];
+                        GD.Print("[LocalClient] ID :" + offset + ":" + data[offset] + ",char :" + (offset+1) + ":" + data[offset+1]);
+                        se.scafholdClientID = data[offset];offset++;
+                        se.scafholdEntityID = data[offset];offset++;
                         byte nameLength = data[offset++];
                         se.name = Encoding.Unicode.GetString(data, 4, nameLength);
+                        for(int i = 0; i < nameLength - 4; i+=4)
+                        {
+                            GD.Print("[LocalClient] NameData:" + data[offset + i] + ":" + data[offset + i + 1] + ":" + data[offset + i + 2] + ":" + data[offset + i + 3]);
+                        }
                         offset += nameLength;
+                        GD.Print("[LocalClient] offset is = " + offset + " after name : " + se.name + ", name was " + nameLength + "bytes long");
                         playerList.Add(se);
-                    }
-                    for(byte i = 0; i < playerList.Count(); i++)
-                    {
-                        GD.Print(playerList[i].name);
                     }
                     
                     break;
