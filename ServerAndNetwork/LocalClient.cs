@@ -172,7 +172,8 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                         se.scafholdEntityID = data[offset];offset++;
                         GD.Print("[LocalClient] ID :" +se.scafholdClientID + ",char :" + se.scafholdEntityID);
                         byte nameLength = data[offset++];
-                        se.name = Encoding.Unicode.GetString(data, 4, nameLength);
+                        GD.Print("[LocalClient] Name at offset " + offset + ":" + Encoding.Unicode.GetString(data, offset, nameLength));
+                        se.name = Encoding.Unicode.GetString(data, offset, nameLength);
                         for(int i = 0; i < nameLength - 4; i+=4)
                         {
                             GD.Print("[LocalClient] NameData:" + data[offset + i] + ":" + data[offset + i + 1] + ":" + data[offset + i + 2] + ":" + data[offset + i + 3]);
