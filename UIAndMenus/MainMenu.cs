@@ -48,12 +48,8 @@ public class MainMenu : Control
 
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
     //Debug
-
-
-
     //Network
     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\\
-
     private LocalClient client = null;
     private HostServer server = null;
 
@@ -89,7 +85,6 @@ public class MainMenu : Control
     }
     public void DisplayPlayerList(List<ScafholdEntity> playerList)
     {
-        GD.Print("[MainMenu]");
         GD.Print("[MainMenu] playerListCount : " + playerList.Count);
         //Finds the label corresponding to players and sets thier theme to "connected"
         for (byte i = 0; i < playerList.Count; i++)
@@ -150,7 +145,6 @@ public class MainMenu : Control
         nameBox = GetNode("Camera2D/CanvasLayer/Namebox") as LineEdit;
         
         resetNetworkConfigForm = GetNode("Camera2D/CanvasLayer/ResetNetworkConfigForm") as Sprite;
-        GD.Print("[MainMenu] networkForm is " + resetNetworkConfigForm);
     }
 
     public void MoveCameraTo(sbyte destination)
@@ -191,6 +185,7 @@ public class MainMenu : Control
                 camera.Position = WAITFOROTHERS;
                 break;
             default://Returns to MainMenu in case of error
+                GD.Print("[MainMenu] Invalid destination for camera :" +  destination);
                 MoveCameraTo(0);
                 back = new List<Vector2>() {new Vector2(0,0) };
                 ResetNetwork();
@@ -221,6 +216,7 @@ public class MainMenu : Control
 
     public void ResetNetwork()
     {
+        GD.Print("[MainMenu] ResetNetworkConfig Reset");
         if(client != null)
         {
             client.ShutDown();

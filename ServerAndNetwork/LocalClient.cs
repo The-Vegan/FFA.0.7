@@ -78,8 +78,9 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                 client.Connect();
                 return running = true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                GD.Print("[ERR] Exception in ConnectClient : " + e);
                 return running = false;
             }
         }
@@ -182,7 +183,7 @@ namespace FFA.Empty.Empty.ServerAndNetwork
                     
                     break;
             }
-
+            GD.Print("[LocalClient] Done dealing with dataIn");
 
         }
 

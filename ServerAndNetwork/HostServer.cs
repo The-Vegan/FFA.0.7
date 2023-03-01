@@ -178,24 +178,25 @@ namespace FFA.Empty.Empty.ServerAndNetwork
 
         private void UpdateAllPlayers()
         {
+            GD.Print("[HostServer] UpdateAllPlayers called");
             List<byte> stream = new List<byte>() { SEND_NAME_LIST };
             for(byte i = 0; i < listOfIPs.Length; i++)
             {
-                
-                if (listOfIPs[i] == null) continue;
-                GD.Print("[HostServer] ip " + i + " is " + listOfIPs[i]);
+
+                if (listOfIPs[i] == null) {GD.Print("[HostServer] null ip : " + (i +1)); continue; } else GD.Print("[HostServer] connected ip : " + listOfIPs[i]);
                 ScafholdEntity se = ipToEntity[listOfIPs[i]];
                 stream.Add(se.scafholdClientID);
                 stream.Add(se.scafholdEntityID);
                 
                 if (se.name == null) se.name = "UNNAMED";
                 byte[] nameAsByte = Encoding.Unicode.GetBytes(se.name);
-                GD.Print("[HostServer] id = " + se.scafholdClientID + ", char = " + se.scafholdEntityID + ", name = " + se.name);
                 stream.Add((byte)nameAsByte.Length);
                 for (byte j = 0; j < nameAsByte.Length; j++) stream.Add(nameAsByte[j]);
             }
 
             byte[] outStream = stream.ToArray();
+            menu.lastDataOut = outStream;
+            GD.Print("[HostServer] Set lastDataOut in menu");
             foreach (string ip in listOfIPs)
             {
                 if (ip == null) continue;

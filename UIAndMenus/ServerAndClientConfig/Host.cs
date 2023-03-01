@@ -14,6 +14,8 @@ public class Host : Button
     public override void _Pressed()
     {
         menu.HostGame();
+        GD.Print("[Host] Created HostServer");
         menu.MoveCameraTo(1);
+        GD.Print("[Host] MoveCamTo ModeSelect");
     }
 }
